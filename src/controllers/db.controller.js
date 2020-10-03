@@ -49,12 +49,12 @@ module.exports = class Crud{
       );`
     ];
 
-    querys.forEach(sql => {
-      this.run(sql);      
-    });
+    // querys.forEach(sql => {
+    //   this.run(sql);      
+    // });
     // this.insert('client', ['nome, dataNascimento, email, cpf'], [['Joubert Saquett', '2020-07-10', 'email@gmail.com', '123.456.789.10']])
     // this.update('client', [{nome: 'jou', email: 'jou@gmail.com'}], 'id=12')
-    this.delete('client', 12)
+    // this.delete('client', 12)
   }
 
   /**
@@ -62,51 +62,48 @@ module.exports = class Crud{
    * @param {string} table Nome da tabela.
    * @param {string} where String contendo as condições, ex: id=1.
   */
-  select(table, where){
-    const sql = `SELECT * FROM ${table} WHERE ${where}`
-    this.run(sql);
+  async select(table, where){
+    const sql = `SELECT * FROM ${table} ${where ? 'WHERE ' + where : ''}`
+    return await this.run(sql);
   }
-
+  /**
+   * Select.
+   * @param {string} sql Query Customizada.
+  */
+  async selectCustom(sql){
+    return await this.run(sql);
+  }
+  
   /**
    * Insert in Table.
    * @param {string} table Nome da tabela.
    * @param {array} cols Array contendo o nome das colunas.
    * @param {array} values Array multidimensional para inserir vários registros.
   */
-  insert(table, cols, values){
+  async insert(table, cols, values){
     cols.concat(',');
     const sql = `INSERT INTO ${table} ( ${cols} ) VALUES ?`
-    this.run(sql, values);
+    return await this.run(sql, values);
   }
 
   /**
    * Update register.
    * @param {string} table Nome da tabela.
-   * @param {array} values Array contendo json com os campos e seus valores.
+   * @param {object} values Object com os campos e seus valores.
    * @param {string} where String contendo as condições, ex: cpf=''.
   */
-  update(table, values, where){
-    var queries = [];
-    
-    // Percorre cada objeto para construir a query
-    for (let index = 0; index < values.length; index++) {
-      const value = values[index];
+  async update(table, values, where){
+    const value = values;
 
-      // separa as chaves dos valores
-      const columns = Object.keys(value);
-      const val = Object.values(value);
+    // separa as chaves dos valores
+    const columns = Object.keys(value);
+    const val = Object.values(value);
 
-      // prepara a query já setando as colunas e a condição
-      let sql = "UPDATE " + table + " SET " + columns.join(" = ? ,") +" = ?  WHERE " + where;
+    // prepara a query já setando as colunas e a condição
+    let sql = "UPDATE " + table + " SET " + columns.join(" = ? ,") +" = ?  WHERE " + where;
 
-      // preenche os parametros da query e acrescenta ao array de querys pera execução
-      queries.push(mysql.format(sql, val))
-    }
-
-    // executa query por query
-    queries.forEach(sql => {
-      this.run(sql);
-    });
+    // preenche os parametros da query e acrescenta ao array de querys pera execução
+    return this.run( mysql.format(sql, val) );
   }
 
   /**
@@ -114,9 +111,9 @@ module.exports = class Crud{
    * @param {string} table Nome da tabela.
    * @param {integer} values String contendo o id da do registro.
   */
-  delete(table, id){
+  async delete(table, id){
     const sql = `DELETE FROM ${table} WHERE id = ${id}`
-    this.run(sql);
+    await this.run(sql);
   }
 
   /**
@@ -124,7 +121,7 @@ module.exports = class Crud{
    * @param {string} sql query para execução.
    * @param {array} values array contendo os parametros para preenchimento.
   */
-  run(sql, values){
+  async run(sql, values){
     // Cria a coneção do MySQL
     let connection = mysql.createConnection({
       host     : process.env.DBHOST || 'localhost',
@@ -139,11 +136,27 @@ module.exports = class Crud{
       if(err) return console.log(err);
     });
 
+    let result;
     // Executa a query
-    connection.query(sql, [values], function (error, results, fields){
-      if(error) return console.log(error);
-    });
-
+      
+      return new Promise((resolve, reject) => {   
+        try {
+          console.log(sql)
+          connection.query(sql, [values], function (error, results, fields){
+            if(error) return console.log(error);
+            result = {
+              fieldCount: results.fieldCount,
+              affectedRows: results.affectedRows,
+              insertId: results.insertId,
+              changedRows: results.changedRows,
+              data: results
+            }
+            resolve(result)
+          });
+        } catch (error) {
+          resolve(error)
+        }
+      });
     // Encerra conexão com banco
     connection.end();    
   }
