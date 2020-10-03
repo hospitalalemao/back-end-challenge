@@ -1,3 +1,5 @@
+
+const Crud = require('./controllers/db.controller.js');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const passport = require('passport');
@@ -10,6 +12,9 @@ const router = require('express').Router();
 
 module.exports = function(app,host,port,rootDir)
 {
+    const db_ = new Crud();
+    
+    Debug('Iniciando API');
     var corsOptions = 
     {
         origin: ["http://localhost:4200"],
@@ -28,12 +33,14 @@ module.exports = function(app,host,port,rootDir)
     Debug('Aplicando HELMET para segurança');
     app.use(helmet());
 
-
+    /** Start Routes */
     Debug('Iniciando ROTAS');
-    router.get('/', (req, res)=>{ res.send('API Joubert Saquett') });    
-    app.use('/v1', router);
+    require('./routes/routes.js')(app, passport); 
 
     /*** Start Application  */
     app.application = app.listen(port,host);
     Debug('Rodando em http://'+host+':' + port);
+
+    /**** Header Rewrite ****/
+    app.disable('x-powered-by');
 }
