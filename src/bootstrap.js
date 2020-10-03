@@ -15,7 +15,7 @@ module.exports = function(app,host,port,rootDir)
     const db_ = new Crud();
     
     Debug('Iniciando API');
-    var corsOptions = 
+    let corsOptions = 
     {
         origin: ["http://localhost:4200"],
         allowedHeaders : ["Origin", "X-Requested-With", "Content-Type", "Accept", "Authorization", "x-web-access-token"],

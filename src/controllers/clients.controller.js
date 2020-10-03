@@ -1,12 +1,12 @@
 const Debug = require('debug')('user:controller');
-var response = require('../helpers/response.helpers');
-var validation = require('../helpers/validation.helpers');
-var Crud = require('../controllers/db.controller')
+let response = require('../helpers/response.helpers');
+let validation = require('../helpers/validation.helpers');
+let Crud = require('../controllers/db.controller')
 
 // Cadastra Cliente
-exports.create = async function(req, res) {    
+exports.create = async function(req, res) {
     // recebe todos os parametros do Body
-    var { nome, dataNascimento, email, cpf, endereco } = req.body;
+    let { nome, dataNascimento, email, cpf, endereco } = req.body;
     
     // Valida se não estão vazios
     if((nome == undefined || nome == null) || 
@@ -68,15 +68,17 @@ exports.create = async function(req, res) {
             client: client,            
         }
     });
-},
+}
+
+
 exports.update = async function(req, res) {
     let address, client = null;
     
     // recebe todos os parametros do Body
-    var { nome, dataNascimento, email, cpf, endereco } = req.body;
+    let { nome, dataNascimento, email, cpf, endereco } = req.body;
 
     // recebe o clienteId
-    var clientId = req.params.clientId;
+    let clientId = req.params.clientId;
 
     if(!clientId)
     {
@@ -110,7 +112,7 @@ exports.update = async function(req, res) {
         cpf: (cpf ? cpf : null),
     }
     // Limpas os dados que estão null
-    for(var el in clienteUpdate){
+    for(let el in clienteUpdate){
         if(clienteUpdate[el] == undefined || clienteUpdate[el] == null){
             delete(clienteUpdate[el])
         }
@@ -152,7 +154,7 @@ exports.update = async function(req, res) {
         }
         
         // Limpas os dados que estão null
-        for(var el in AddressUpdate){
+        for(let el in AddressUpdate){
             if(AddressUpdate[el] == undefined || AddressUpdate[el] == null){
                 delete(AddressUpdate[el])
             }
@@ -170,6 +172,7 @@ exports.update = async function(req, res) {
     });
 }
 
+
 exports.listAll = async function(req, res) {
     let crud = new Crud();
     const select = await crud.select('client');
@@ -180,9 +183,10 @@ exports.listAll = async function(req, res) {
     });
 }
 
+
 exports.listById = async function(req, res) {
     // recebe o clienteId
-    var clientId = req.params.clientId;
+    let clientId = req.params.clientId;
 
     let crud = new Crud();
     // Realiza o select
@@ -197,7 +201,7 @@ exports.listById = async function(req, res) {
 
 exports.listClientAddress = async function(req, res) {
     // recebe o clienteId
-    var clientId = req.params.clientId;
+    let clientId = req.params.clientId;
 
     let crud = new Crud();
     // Realiza o select
@@ -221,7 +225,7 @@ exports.deleteClienteAddress = async function(req, res) {
         const client = await crud.select('client', 'id=' + clientId);
         clientId = client.data[0].id;
         // Realiza o select
-        const address = await crud.select('adress', 'id=' + client.data[0].address_id);
+        const address = await crud.select('address', 'id=' + client.data[0].address_id);
         addressId = address.data[0].id;
 
         // se existir o Cliente realiza o delete

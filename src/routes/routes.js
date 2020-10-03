@@ -1,18 +1,31 @@
 
 const router = require('express').Router();
-const ClientsController = require('../controllers/clients.controller');
+const AuthController = require('../controllers/auth.controller');
 
 module.exports = function(app, passport)
 {
+    const validateRoutes = [
+        AuthController.validateRoutes
+    ]; 
     
-    router.get('/client', ClientsController.listAll);
-    router.get('/client/:clientId', ClientsController.listById);
-    router.get('/client/address/:clientId', ClientsController.listClientAddress);
-    router.post('/client', ClientsController.create);
-    router.patch('/client/update/:clientId', ClientsController.update);
-    router.delete('/client/:clientId', ClientsController.deleteClienteAddress);
+    const validateAuth = [
+        AuthController.validateRoutes,
+        AuthController.validateAuth,
+        
+    ];
+    const validateContentType = [
+        AuthController.validateContentType,
+    ];
     
-    router.get('/', (req, res)=>{ res.send('API Joubert Saquett') });
+    // Auth routes
+    require('./auth.routes')(router, validateRoutes, validateContentType, validateAuth);
 
+    // Client routes
+    require('./client.routes')(router, validateRoutes, validateContentType, validateAuth);
+
+    router.get('/', validateRoutes, (req, res)=>{ res.send('API Joubert Saquett') });
     app.use('/v1', router);
+    app.use(AuthController.validateRoutes);  
+    app.use(AuthController.denyRoutes);  
+
 }
