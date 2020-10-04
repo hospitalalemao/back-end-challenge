@@ -49,12 +49,9 @@ module.exports = class Crud{
       );`
     ];
 
-    // querys.forEach(sql => {
-    //   this.run(sql);      
-    // });
-    // this.insert('client', ['nome, dataNascimento, email, cpf'], [['Joubert Saquett', '2020-07-10', 'email@gmail.com', '123.456.789.10']])
-    // this.update('client', [{nome: 'jou', email: 'jou@gmail.com'}], 'id=12')
-    // this.delete('client', 12)
+    querys.forEach(sql => {
+      this.run(sql);      
+    });
   }
 
   /**
