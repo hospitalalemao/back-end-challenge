@@ -12,10 +12,10 @@
      * A instalação acontece automáticamente, basta ter um banco de dados (challenge_joubert) setado no arquivo '.env' que esta na raiz do projeto, as tabelas serão criadas automáticamente.
      * 
      * Na pasta OTHERS/POSTMAN, existem os arquivos para maninupalão da API.
+     * --Api em Lumen acabei colocando dentro da pasta OTHERS/LUMEN/, ela não possue nenhuma lógica de service ou model, somente as rotas e os controllers.
      * 
      * Foi desenvolvido somente 1 endpoint devido ao tempo, assim podendo focar em itens como documentação e autenticação jwt.
      * 
-     * --Api em Lumen acabei colocando dentro da pasta OTHERS/LUMEN/, ela não possue nenhuma lógica de service ou model, somente as rotas.
      */
 
 const router = require('express').Router();
