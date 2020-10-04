@@ -1,5 +1,16 @@
 define({ "api": [
   {
+    "type": "",
+    "url": "/",
+    "title": "Install",
+    "name": "Instructions",
+    "group": "1._Instructions",
+    "version": "1.0.0",
+    "description": "<p>Técnologias usadas:  express, body-parser, cors, debug, dotenv, helmet, jsonwebtoken, mysql, nodemon, passport, uuid, apiDoc.</p> <p>A instalação acontece automáticamente, basta ter um banco de dados (challenge_joubert) setado no arquivo '.env' que esta na raiz do projeto, as tabelas serão criadas automáticamente.</p> <p>Na pasta OTHERS/POSTMAN, existem os arquivos para maninupalão da API.</p> <p>Foi desenvolvido somente 1 endpoint devido ao tempo, assim podendo focar em itens como documentação e autenticação jwt.</p> <p>--Api em Lumen acabei colocando dentro da pasta OTHERS/LUMEN/, ela não possue nenhuma lógica de service ou model, somente as rotas.</p>",
+    "filename": "src/routes/routes.js",
+    "groupTitle": "1._Instructions"
+  },
+  {
     "type": "post",
     "url": "/auth/login",
     "title": "Login",
@@ -960,16 +971,5 @@ define({ "api": [
     },
     "filename": "src/routes/client.routes.js",
     "groupTitle": "Client"
-  },
-  {
-    "type": "",
-    "url": "/",
-    "title": "1. Install",
-    "name": "Install",
-    "group": "Install",
-    "version": "1.0.0",
-    "description": "<p>Instalação</p>",
-    "filename": "src/routes/routes.js",
-    "groupTitle": "Install"
   }
 ] });
