@@ -4,21 +4,6 @@ const AuthController = require('../controllers/auth.controller');
 
 module.exports = function(app, passport)
 {
-    
-
-    /**
-     * 
-     * @api / 1. Install
-     * @apiName Install
-     * @apiGroup Install
-     * @apiVersion  1.0.0
-     * 
-     * 
-     * @apiDescription Técnologias usadas:  body-parser, cors, debug, dotenv, express, helmet, jsonwebtoken, mysql, nodemon, passport, uuid, apiDoc.
-     * A instalação acontece automáticamente, basta ter um banco de dados (challenge_joubert) setado no arquivo .env na raiz do projeto, as tabelas serão criadas automáticamente.
-     * Na pasta POSTMAN, existem os arquivos para maninupalão da API.
-     * 
-     */
     const validateRoutes = [
         AuthController.validateRoutes
     ]; 

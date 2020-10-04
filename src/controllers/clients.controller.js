@@ -164,7 +164,7 @@ exports.update = async function(req, res) {
         
     Debug('Successs!!! ');
     return response.json(res,200,{
-        success : true,
+        success : "success",
         data : {
             address : address,
             client: client,            
@@ -178,7 +178,7 @@ exports.listAll = async function(req, res) {
     const select = await crud.select('client');
     
     return response.json(res,200,{
-        success : true,
+        success : "success",
         data: select.data
     });
 }
@@ -193,7 +193,7 @@ exports.listById = async function(req, res) {
     const select = await crud.select('client', 'id=' + clientId);
     
     return response.json(res,200,{
-        success : true,
+        success : "success",
         data: select.data
     });
 }
@@ -208,7 +208,7 @@ exports.listClientAddress = async function(req, res) {
     const select = await crud.selectCustom('SELECT * FROM client as C, address as A WHERE C.address_id = A.id AND C.id=' + clientId);
     
     return response.json(res,200,{
-        success : true,
+        success : "success",
         data: select.data
     });
 }
@@ -239,7 +239,7 @@ exports.deleteClienteAddress = async function(req, res) {
         }
         Debug('Deletado: Cliente e Endereço')
         return response.json(res,200,{
-            success : true,
+            success : "success",
         });
         
     } catch (error) {
