@@ -1,0 +1,35 @@
+{
+  "name": "node-back-end-challenge",
+  "version": "1.0.0",
+  "description": "Criar duas APIs que contemplem um CRUD completo (não esqueça de usar o padrão REST).",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon api.js",
+    "doc": "apidoc -i src/ -o doc/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hospitalalemao/back-end-challenge.git"
+  },
+  "author": "Joubert Saquett",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hospitalalemao/back-end-challenge/issues"
+  },
+  "homepage": "https://github.com/hospitalalemao/back-end-challenge#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "debug": "^4.2.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "helmet": "^4.1.1",
+    "jsonwebtoken": "^8.5.1",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.4",
+    "passport": "^0.4.1",
+    "uuid": "^3.3.3"
+  }
+}
